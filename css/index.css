@@ -52,6 +52,10 @@ section.cards article.card img{
     border-radius: 5px;
 }
 
+section.cards article.card div.card-text p{
+    text-align: justify;
+}
+
 section.newsletter form{
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
