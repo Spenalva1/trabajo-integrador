@@ -1,15 +1,79 @@
-
-.container-fluid {
+.row{
     max-width: 1140px;
+    margin: 0;
     padding: 0;
 }
 
-#perfilDelUsuario{
-    font-size: 20px;
+section.user{
+    padding: 15px;
 }
-.navegador{
-    overflow: hidden;
+
+section.user article.user-info{
+    
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 5px;
 }
-header{
-font-size: 40px;
+
+
+section.user article.user-info form{
+    padding: 10px;
+}
+
+section.user article.user-info form fieldset{
+}
+
+
+
+/* COSAS QUE SE VEN SOLO CUANDO SE EDITAN LOS DATOS */
+section.user article.user-info form fieldset div.re-pass{
+    display: none;
+}
+#btn-cancel, #btn-save{
+    display: none;
+}
+/* ----------------------------------------------- */
+
+
+
+
+section.user article.user-info form div.button-container{
+    text-align: center;
+}
+
+
+section.user article.user-info div.imgAndHistory-container{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    */
+    padding-top: 20px;
+    text-align: center;
+}
+
+section.user article.user-info div.imgAndHistory-container a{
+    margin-bottom: 20px;
+}
+
+#profile-img{
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 25px;
+}
+
+
+
+
+
+
+
+@media (max-width: 767.98px){
+    section.user article.user-info form {
+        display: flex;
+        
+    }
+
+    section.user article.user-info div.imgAndHistory-container{
+        order: -1;
+        padding-bottom: 20px;
+    }
 }

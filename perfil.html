@@ -59,42 +59,97 @@
     </header>
 
     <main>
-        <div class="container-fluid">
-            <section id="perfilDelUsuario">
-                <div class=navegador>
-                    <ul class="nav justify-content-end">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="indexPerfilDelUsuario.html">Mis datos</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="misCompras.html">Mis compras</a>
-                    </li>
-                    </ul> 
-                </div>
-               <header>Mis datos</header>
-               <div class="Foto"> <i class="fas fa-camera"></i>
-                   <p>Datos de mi cuenta</p>
-               </div>
-               <input class="form-control" type="text" placeholder="Usuario" readonly>
-               <input class="form-control" type="email" placeholder="Correo electrónico" readonly>
-               <p>Datos personales</p>
-               <input class="form-control" type="text" placeholder="Nombre y apellido" readonly>
-               <input class="form-control" type="text" placeholder="Domicilio" readonly>
-               <input class="form-control" type="text" placeholder="Teléfono" readonly>
-               <input class="form-control" type="text" placeholder="Teléfono alternativo" readonly>
-               <p>Tarjetas</p>
-               <input class="form-control" type="text" placeholder="Tarjeta Bancaria" readonly>
-            
-            </section>
+
+      <section class="user row">
+        <article class="user-info col-12 row">
+          <form class="col-12 col-md-8 row">
+            <fieldset class="row col-12" disabled>
+              <h2>Datos de mi cuenta</h2>
+
+              <!-- EMAIL -->
+              <div class="form-group">
+                <label for="email">E-Mail</label>
+                <input type="email" id="email" name="email" class="form-control" value="emailexample@gmail.com">
+              </div>
+
+              <!-- CONTRASEÑA -->
+              <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="text" id="password" name="password" class="form-control" placeholder="**********">
+              </div>
+
+              <!-- RE CONTRASEÑA -->
+              <div class="form-group re-pass">
+                <label for="repass">Reingrese contraseña</label>
+                <input type="text" id="repass" name="repass" class="form-control" placeholder="Disabled input">
+              </div>
+
+              <h2>Datos personales</h2>
+
+              <!-- APELLIDOS -->
+              <div class="form-group">
+                <label for="email">Apellidos</label>
+                <input type="text" id="surname" name="surname" class="form-control" value="apellido apellido">
+              </div>
+
+              <!-- NOMBRES -->
+              <div class="form-group">
+                <label for="email">Nombres</label>
+                <input type="text" id="name" name="name" class="form-control" value="nombre nombre">
+              </div>
+
+              <!-- DNU -->
+              <div class="form-group">
+                <label for="email">Documento</label>
+                <input type="text" id="dni" name="dni" class="form-control" value="12345678">
+              </div>
+
+              <!-- FECHA DE NACIMIENTO -->
+              <div class="form-group">
+                <label for="email">Fecha de nacimiento</label>
+                <input type="date" id="fecnac" name="fecnac" class="form-control">
+              </div>
+
+              <!-- TELEFONO -->
+              <div class="form-group">
+                <label for="email">Telefono</label>
+                <input type="text" id="phone" name="phone" class="form-control" value="4578945612">
+              </div>
+
+
+              <h3>Direcciones</h3>
+              
+              <!-- DIRECCIONES -->
+              <div class="form-group">
+                <label for="email">Direccion 1</label>
+                <input type="text" id="addres" name="addres" class="form-control" value="calle calle 123">
+              </div>
+
+
+
+            </fieldset>
+
+            <!-- BOTONES -->
+            <div class="button-container col-12">
+              <button type="submit" id="btn-edit" class="btn btn-primary">Editar Datos</button>
+              <button type="submit" id="btn-cancel" class="btn btn-danger">Cancelar</button>
+              <button type="submit" id="btn-save" class="btn btn-success">Guardar</button>
             </div>
 
-
+          </form>
+          <div class="col-12 col-md-4 imgAndHistory-container">
+            <img id="profile-img" src="img/perfil.png" alt="">
+            <br>
+            <a href="historial_compras.html">Ver historial de compras</a>
+          </div>
+        </article>
+      </section>
 
     </main>
 
     <footer>
       <section class="logo">
-          <h1>DHShop</h1>
+        <h1>DHShop</h1>
       </section>
       <section class="footer-nav">
         <ul>
