@@ -1,8 +1,4 @@
 
-/* Log In Page */
-body{
-    background-color: aquamarine;
-}
 
 .container-fluid{
     max-width: 1140px;
@@ -32,7 +28,7 @@ img.logo{
     align-items: center;
     margin: 0 auto;
     max-width: 400px;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(225, 225, 225, 0.5);
     border-radius: 10px;
 }
 
