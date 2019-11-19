@@ -72,7 +72,8 @@ footer section.footer-nav{
 
 footer section.footer-nav ul{
     list-style-type: none;
-    padding: 10px 0;
+    padding: 10px 0 0 0;
+    margin-bottom: 0;
 }
 
 footer section.footer-nav ul li{
