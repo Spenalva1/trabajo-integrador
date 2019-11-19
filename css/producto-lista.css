@@ -14,12 +14,18 @@ section.products-list {
     justify-content: space-around;
 }
 
+div.product-container{
+    padding: 10px;
+}
+
 section.products-list a.product {
     border: 1px solid rgba(0, 0, 0, .125);
-    padding: 20px;
+    border-radius: 5px;
+    padding: 15px;
     text-decoration: none;
     color: black;
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 section.products-list a:nth-child(even){
