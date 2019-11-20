@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 .container-fluid{
     max-width: 1140px;
@@ -13,6 +13,7 @@ main{
 }
 
 
+
 /* Logo */
 img.logo{
     width: 200px;
@@ -20,16 +21,19 @@ img.logo{
     display: block;
     margin: 0 auto;
 }
+
 /* Contenedor principal de todos los elementos */
 .main-content{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 1px solid blue;
     margin: 0 auto;
     max-width: 400px;
     background-color: rgba(225, 225, 225, 0.5);
     border-radius: 10px;
+    height: 90vh;
 }
 
 h1{
