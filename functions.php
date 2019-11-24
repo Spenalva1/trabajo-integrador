@@ -8,15 +8,6 @@ function validateInput($errors, $name){
     }
 }
 
-function checkIfAvailableByUsername($array, $username){
-    foreach ($array as $user) {
-        if ($user["username"] == $username){
-            return false;
-        }
-    }
-    return true;
-}
-
 function checkIfAvailableByEmail($array, $email){
     foreach ($array as $user) {
         if ($user["email"] == $email){
@@ -35,5 +26,32 @@ function checkIfAvailableByDni($array, $dni){
     return true;
 }
 
+function getUserById($users, $id){
+    foreach ($users as $user) {
+        if ($user["id"] == $id){
+            return $user;
+        }
+    }
+    return null;
+}
+
+
+function getUserByEmail($users, $email){
+    foreach ($users as $user) {
+        if ($user["email"] == $email){
+            return $user;
+        }
+    }
+    return null;
+}
+
+function getUserByDni($users, $dni){
+    foreach ($users as $user) {
+        if ($user["dni"] == $dni){
+            return $user;
+        }
+    }
+    return null;
+}
 
 ?>
