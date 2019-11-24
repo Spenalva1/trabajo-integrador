@@ -47,8 +47,14 @@ if ($_POST) {
         $imgName = $_FILES["img"]["name"];
         $img = $_FILES["img"]["tmp_name"];
         $ext = pathinfo($imgName, PATHINFO_EXTENSION);
-        $imgUser = "profile_img/". count($json) . "." . $ext;
-        $newUser["img"] = $imgUser;
+
+        if ($ext == "jpg" || $ext == "jpeg" || $ext == "png") {
+            $imgUser = "profile_img/" . count($json) . "." . $ext;
+            $newUser["img"] = $imgUser;
+        } else {
+            $errors["img"] = "La imagen debe ser .jpg , .jpeg o .png";
+            $_FILES["img"]["error"] = 4;
+        }
     } else {
         $newUser["img"] = "img/perfil.png";
     }
@@ -182,8 +188,9 @@ if ($_POST) {
 
                     <!-- FOTO DE PERFIL -->
                     <div class="form-group">
-                        <label for="birthdate">Foto de perfil</label> <br>
+                        <label for="img">Foto de perfil</label> <br>
                         <input name="img" type="file" id="img">
+                        <?php echo (isset($errors["img"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["img"] . "</div>" : "" ?>
                     </div>
 
                     <!-- DNI -->
