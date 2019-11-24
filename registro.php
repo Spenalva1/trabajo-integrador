@@ -18,17 +18,6 @@ if ($_POST) {
     }
 
 
-    if (strlen($_POST["username"]) == 0) {
-        $errors["username"] = "Completar campo";
-    } else if (strlen($_POST["username"]) < 6) {
-        $errors["username"] = "El nombre de ususario debe tener al menos 6 caracteres";
-    } else if (!checkIfAvailableByUsername($json, $_POST["username"])) {
-        $errors["username"] = "El nombre de usuario ya se encuentra en uso";
-    } else {
-        $newUser["username"] = $_POST["username"];
-    }
-
-
 
     if (strlen($_POST["email"]) == 0) {
         $errors["email"] = "Completar campo";
@@ -165,14 +154,6 @@ if ($_POST) {
                         <label for="name">Nombre Completo</label>
                         <input value="<?php echo (isset($_POST["name"])) ? $_POST["name"] : "" ?>" name="name" type="text" class="form-control <?= ($_POST) ? validateInput($errors, 'name') : ''; ?> " id="name" placeholder="Ingrese su nombre completo">
                         <?php echo (isset($errors["name"])) ? "<div class='invalid-feedback'>" . $errors["name"] . "</div>" : "" ?>
-                    </div>
-
-
-                    <!-- NOMBRE DE USUARIO -->
-                    <div class="form-group">
-                        <label for="username">Nombre de usuario</label>
-                        <input value="<?php echo (isset($_POST["username"])) ? $_POST["username"] : "" ?>" name="username" type="text" class="form-control <?= ($_POST) ? validateInput($errors, 'username') : ''; ?>" id="username" placeholder="Seleccione su nombre de usuario">
-                        <?php echo (isset($errors["username"])) ? "<div class='invalid-feedback'>" . $errors["username"] . "</div>" : "" ?>
                     </div>
 
 
