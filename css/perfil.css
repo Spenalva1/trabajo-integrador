@@ -21,11 +21,8 @@ section.user article.user-info form{
 
 
 
-/* COSAS QUE SE VEN SOLO CUANDO SE EDITAN LOS DATOS */
-section.user article.user-info form fieldset div.re-pass{
-    display: none;
-}
-#btn-cancel, #btn-save{
+/* COSAS QUE SE VEN */
+#id, #oimg{
     display: none;
 }
 /* ----------------------------------------------- */
