@@ -135,8 +135,6 @@ if ($_POST) {
     $newJSON = json_encode($newJSON);
     file_put_contents("users.json", $newJSON);
     header('location: perfil.php?id=' . $_POST["id"]);
-  } else {
-    var_dump($errors);
   }
 }
 
