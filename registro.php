@@ -8,6 +8,8 @@ if ($_POST) {
     $json = file_get_contents("users.json");
     $json = json_decode($json, true);
 
+    $newUser["id"] = count($json);
+
 
     if (strlen($_POST["name"]) == 0) {
         $errors["name"] = "Completar campo";
@@ -56,8 +58,7 @@ if ($_POST) {
         $imgName = $_FILES["img"]["name"];
         $img = $_FILES["img"]["tmp_name"];
         $ext = pathinfo($imgName, PATHINFO_EXTENSION);
-        //$imgUser = "profile_img/". count($json) . "." . $ext;
-        $imgUser = "profile_img/" . $_POST["name"] . "." . $ext;
+        $imgUser = "profile_img/". count($json) . "." . $ext;
         $newUser["img"] = $imgUser;
     } else {
         $newUser["img"] = "img/perfil.png";
