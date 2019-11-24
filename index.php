@@ -1,3 +1,45 @@
+<?php
+
+include 'functions.php';
+
+if ($_POST) {
+  $emails = file_get_contents("newsletter.json");
+  $emails = json_decode($emails, true);
+
+
+  if (strlen($_POST["email"]) == 0) {
+    $errors["email"] = "Completar campo";
+  } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+    $errors["email"] = "Formato de email incorrecto";
+  }else if (!checkIfAvailableByEmail($emails, $_POST["email"])) {
+    $errors["email"] = "";
+  } else {
+    $newEmail["email"] = $_POST["email"];
+  }
+
+  if (!isset($errors)) {
+    $emails[] = $newEmail;
+    $emails = json_encode($emails);
+    file_put_contents("newsletter.json", $emails);
+  }
+}
+
+
+
+
+
+
+?>
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +57,7 @@
 
   <?php include 'header.php'; ?>
 
-  
+
 
 
   <div class="container-fluid">
@@ -114,12 +156,12 @@
       <section class="newsletter">
         <h2>Newsletter</h2>
 
-        <form>
+        <form method="post" action="">
           <h3>Subscribete para enterarte de todas las novedades</h3>
           <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-10">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+              <input name="email" type="email" class="form-control" id="inputEmail3" placeholder="Email">
             </div>
           </div>
           <div class="form-group row">
