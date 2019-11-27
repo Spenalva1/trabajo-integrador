@@ -19,7 +19,7 @@ if ($_POST) {
   if (strlen($_POST["name"]) == 0) {
     $newUser["name"] = getUserById($json, $_POST["id"])["name"];
   } else {
-    $newUser["name"] = $_POST["name"];
+    $newUser["name"] = trim($_POST["name"]);
   }
 
 
@@ -32,10 +32,10 @@ if ($_POST) {
     if (getUserByEmail($json, $_POST["email"])["id"] != $_POST["id"]) {
       $errors["email"] = "El email ya se encuentra en uso";
     } else {
-      $newUser["email"] = $_POST["email"];
+      $newUser["email"] = trim($_POST["email"]);
     }
   } else {
-    $newUser["email"] = $_POST["email"];
+    $newUser["email"] = trim($_POST["email"]);
   }
 
 
@@ -80,10 +80,10 @@ if ($_POST) {
     if (getUserByDni($json, $_POST["dni"])["id"] != $_POST["id"]) {
       $errors["dni"] = "El dni ya se encuentra en uso";
     } else {
-      $newUser["dni"] = $_POST["dni"];
+      $newUser["dni"] = trim($_POST["dni"]);
     }
   } else {
-    $newUser["dni"] = $_POST["dni"];
+    $newUser["dni"] = trim($_POST["dni"]);
   }
 
 
@@ -107,14 +107,14 @@ if ($_POST) {
   } else if (!is_numeric($_POST["phone"])) {
     $errors["phone"] = "Debe ingresar un valor numérico";
   } else {
-    $newUser["phone"] = $_POST["phone"];
+    $newUser["phone"] = trim($_POST["phone"]);
   }
 
 
   if (strlen($_POST["address"]) == 0) {
     $newUser["address"] = getUserById($json, $_POST["id"])["address"];
   } else {
-    $newUser["address"] = $_POST["address"];
+    $newUser["address"] = trim($_POST["address"]);
   }
 
 
