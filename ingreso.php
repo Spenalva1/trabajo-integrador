@@ -27,7 +27,7 @@
             <div class="container-fluid">
                 <div class="main-content mt-3">
                     <h1 id="title-page">Ingresar</h1>
-                    <a href="index.html"><img src="img/logo-dh.PNG" alt=""></a>
+                    <a href="index.php"><img src="img/logo-dh.PNG" alt=""></a>
                     <form>
                         <div class="form-group">
                             <input type="email" class="form-control" id="exampleInputEmail1"
