@@ -57,3 +57,15 @@ function getUserByDni($users, $dni){
 function generateRandomString($length = 10) {
     return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 }
+
+function checkLogIn($email, $pass, $users){
+    foreach ($users as $user) {
+        if($email == $user["email"]){
+            if(password_verify($pass, $user["password"])){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
+}
