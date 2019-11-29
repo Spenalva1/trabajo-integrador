@@ -48,7 +48,7 @@ if ($_POST) {
         $img = $_FILES["img"]["tmp_name"];
         $ext = pathinfo($imgName, PATHINFO_EXTENSION);
 
-        if ($ext == "jpg" || $ext == "jpeg" || $ext == "png") {
+        if ($ext == "jpg" || $ext == "jpeg" || $ext == "png" || ".PNG") {
             $imgUser = "profile_img/" . count($json) . "." . $ext;
             $newUser["img"] = $imgUser;
         } else {
@@ -113,7 +113,7 @@ if ($_POST) {
         $json[] = $newUser;
         $json = json_encode($json);
         file_put_contents("users.json", $json);
-        header("location: index.php");
+        header("location: ingreso.php");
     }
 }
 
