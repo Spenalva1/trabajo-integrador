@@ -252,7 +252,8 @@ if ($_POST) {
             <div class="col-12 col-md-4 imgAndHistory-container">
               <img id="profile-img" src="<?= $currentUser["img"] ?>" alt="">
               <br>
-              <a href="historial_compras.php">Ver historial de compras</a>
+              <a href="historial_compras.php">Ver historial de compras</a><br>
+              <a href="logOut.php">Cerrar sesión</a>
             </div>
           </article>
         </section>
