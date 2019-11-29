@@ -3,32 +3,38 @@
 if ($_POST) {
 
     include 'functions.php';
-    
+
     $json = file_get_contents("users.json");
     $json = json_decode($json, true);
-    
+
     if (strlen($_POST["email"]) == 0) {
         $errors["email"] = "Completar campo";
     } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
         $errors["email"] = "Formato de email incorrecto";
-    } else if (getUserByEmail($json, $_POST["email"]) === null) {
+    } else if (getUserByEmail($json, $_POST["email"]) == null) {
         $errors["email"] = "El email no se encuentra registrado";
     }
-    
+
     if (strlen($_POST["pass"]) == 0) {
         $errors["pass"] = "Completar campo";
     }
+
+
     
     if (!isset($errors)) {
-        if (checkLogIn($_POST["email"], $_POST["pass"], $json)){
+        if (checkLogIn($_POST["email"], $_POST["pass"], $json)) {
+            if(isset($_POST["remember"])){
+                setcookie("rememberEmail", $_POST["email"], time() + 60*60*24*7);
+                setcookie("rememberPass", $_POST["pass"], time() + 60*60*24*7);
+            }
             session_start();
-            $_SESSION["userId"] = getUserByEmail( $json, $_POST["email"])["id"];
+            $_SESSION["userId"] = getUserByEmail($json, $_POST["email"])["id"];
             header("location: index.php");
-            var_dump($_SESSION);
-        }else{
+        } else {
             $errors["pass"] = "Contraseña incorrecta";
         }
     }
+    var_dump($errors);
 }
 
 ?>
@@ -60,13 +66,22 @@ if ($_POST) {
                     <a href="index.php"><img src="img/logo-dh.PNG" alt=""></a>
                     <form method="post" action="">
                         <div class="form-group">
-                            <input value="<?php echo (isset($_POST["email"])) ? $_POST["email"] : "" ?>" type="text" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
-                            <?php echo (isset($errors["email"])) ? "<div class='invalid-feedback'>" . $errors["email"] . "</div>" : "" ?>
+                            <input value="<?php echo (isset($_POST["email"])) ? $_POST["email"] : ((isset($_COOKIE["rememberEmail"]) ? $_COOKIE["rememberEmail"] : "")) ?>" type="text" name="email" class="form-control <?= ($_POST) ? validateInput($errors, 'email') : ''; ?>" id="email" aria-describedby="emailHelp" placeholder="Email">
+                            <?php echo (isset($errors["email"])) ? "<div style='display:block' class='invalid-feedback'>" . $errors["email"] . "</div>" : "" ?>
                         </div>
+
                         <div class="form-group">
-                            <input type="password" name="pass" class="form-control <?= ($_POST) ? validateInput($errors, 'pass') : ''; ?>" id="pass" placeholder="Password">
-                            <?php echo (isset($errors["pass"])) ? "<div class='invalid-feedback'>" . $errors["pass"] . "</div>" : "" ?>
+                            <input value="<?php echo (!$_POST) ? ((isset($_COOKIE["rememberPass"]) ? $_COOKIE["rememberPass"] : "")) : "" ?>" type="password" name="pass" class="form-control <?= ($_POST) ? ((isset($errors["pass"])) ? "is-invalid" : "") : ''; ?>" id="pass" placeholder="Password">
+                            <?php  echo (isset($errors["pass"])) ? "<div class='invalid-feedback'>" . $errors["pass"] . "</div>" : "" ?>
                         </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="true" name="remember" id="remember">
+                            <label class="form-check-label" for="remember">
+                                Recuerdame
+                            </label>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">ingresar</button>
                     </form>
                     <form id="registro" action="registro.php">
