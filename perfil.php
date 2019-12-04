@@ -183,7 +183,7 @@ if ($_POST) {
 
                 <!-- CONTRASEÑA -->
                 <div class="form-group">
-                  <label for="pass">Contraseña</label>
+                  <label for="pass">Cambiar contraseña</label>
                   <input type="password" id="pass" name="pass" class="form-control <?= ($_POST) ? validateInput($errors, 'pass') : ''; ?>" placeholder="**********">
                   <?php echo (isset($errors["pass"])) ? "<div class='invalid-feedback'>" . $errors["pass"] . "</div>" : "" ?>
                 </div>
