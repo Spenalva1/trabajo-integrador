@@ -2,10 +2,12 @@
 
 include "functions.php";
 
-if ($_GET) {
+session_start();
+
+if ($_SESSION) {
   $json = file_get_contents("users.json");
   $json = json_decode($json, true);
-  $currentUser = getUserById($json, $_GET["id"]);
+  $currentUser = getUserById($json, $_SESSION["userId"]);
 }
 
 if ($_POST) {
@@ -163,7 +165,7 @@ if ($_POST) {
   <div class="container-fluid">
 
     <main>
-      <?php if (isset($_GET["id"])) : ?>
+      <?php if ($_SESSION) : ?>
 
         <section class="user row">
           <article class="user-info col-12 row">
@@ -171,7 +173,7 @@ if ($_POST) {
               <fieldset class="row col-12">
                 <h2>Datos de mi cuenta</h2>
 
-                <input type="text" name="id" id="id" value="<?= ($_POST) ? $_POST["id"] : $_GET["id"] ?>">
+                <input type="text" name="id" id="id" value="<?= ($_POST) ? $_POST["id"] : $_SESSION["userId"] ?>">
                 <input type="text" name="oimg" id="oimg" value="<?= ($_POST) ? $_POST["oimg"] : $currentUser["img"] ?>">
 
                 <!-- EMAIL -->
@@ -258,7 +260,7 @@ if ($_POST) {
           </article>
         </section>
 
-      <?php else : header('location: perfil.php?id=0') ?>
+      <?php else : header('location: index.php') ?>
       <?php endif; ?>
 
     </main>
