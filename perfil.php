@@ -62,7 +62,7 @@ if ($_POST) {
     if ($ext == "jpg" || $ext == "jpeg" || $ext == "png") {
       $imgUser = "profile_img/" . $_POST["id"] . "." . $ext;
       $newUser["img"] = $imgUser;
-    }else{
+    } else {
       $errors["img"] = "La imagen debe ser .jpg , .jpeg o .png";
       $_FILES["img"]["error"] = 4;
     }

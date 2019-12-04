@@ -1,5 +1,11 @@
 <?php
 
+session_start();
+
+if($_SESSION){
+    header('location: index.php');
+}
+
 if ($_POST) {
 
     include 'functions.php';
@@ -20,12 +26,12 @@ if ($_POST) {
     }
 
 
-    
+
     if (!isset($errors)) {
         if (checkLogIn($_POST["email"], $_POST["pass"], $json)) {
-            if(isset($_POST["remember"])){
-                setcookie("rememberEmail", $_POST["email"], time() + 60*60*24*7);
-                setcookie("rememberPass", $_POST["pass"], time() + 60*60*24*7);
+            if (isset($_POST["remember"])) {
+                setcookie("rememberEmail", $_POST["email"], time() + 60 * 60 * 24 * 7);
+                setcookie("rememberPass", $_POST["pass"], time() + 60 * 60 * 24 * 7);
             }
             session_start();
             $_SESSION["userId"] = getUserByEmail($json, $_POST["email"])["id"];
@@ -72,7 +78,7 @@ if ($_POST) {
 
                         <div class="form-group">
                             <input value="<?php echo (!$_POST) ? ((isset($_COOKIE["rememberPass"]) ? $_COOKIE["rememberPass"] : "")) : "" ?>" type="password" name="pass" class="form-control <?= ($_POST) ? ((isset($errors["pass"])) ? "is-invalid" : "") : ''; ?>" id="pass" placeholder="Password">
-                            <?php  echo (isset($errors["pass"])) ? "<div class='invalid-feedback'>" . $errors["pass"] . "</div>" : "" ?>
+                            <?php echo (isset($errors["pass"])) ? "<div class='invalid-feedback'>" . $errors["pass"] . "</div>" : "" ?>
                         </div>
 
                         <div class="form-check">
