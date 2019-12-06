@@ -34,7 +34,6 @@ if ($_POST) {
             $errors["pass"] = "Contraseña incorrecta";
         }
     }
-    var_dump($errors);
 }
 
 ?>
