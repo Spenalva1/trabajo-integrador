@@ -1,5 +1,11 @@
 <?php
 
+session_start();
+
+if($_SESSION){
+    header('location: index.php');
+}
+
 if ($_POST) {
 
     include 'functions.php';
@@ -27,7 +33,6 @@ if ($_POST) {
                 setcookie("rememberEmail", $_POST["email"], time() + 60*60*24*7);
                 setcookie("rememberPass", $_POST["pass"], time() + 60*60*24*7);
             }
-            session_start();
             $_SESSION["userId"] = getUserByEmail($json, $_POST["email"])["id"];
             header("location: index.php");
         } else {
