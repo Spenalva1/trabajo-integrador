@@ -4,8 +4,12 @@
         <a href='index.php'><img src='img/logo-dh.PNG' alt=''></a>
       </article>
       <article class='usuario-acciones'>
-        <a href='registro.php' id='registrarme'>Crear cuenta</a>
-        <a href='ingreso.php' id='ingresar'>Ingresar</a>
+        <?php if (isset($_SESSION['userId'])) :?>
+          <a href='logOut.php' id='registrarme'><button type="button" class="btn btn-danger">Log Out</button></a>
+        <?php else: ?>
+          <a href='registro.php' id='registrarme'>Crear cuenta</a>
+          <a href='ingreso.php' id='ingresar'>Ingresar</a>
+        <?php endif;?>
       </article>
     </section>
     <hr>
@@ -30,11 +34,13 @@
             <a class='nav-link' href='faq.php'>Ayuda</a>
           </li>
           <li class='nav-item'>
+          <?php if (isset($_SESSION['userId'])) :?>
             <a class='nav-link' href='perfil.php'>Perfil</a>
           </li>
           <li class='nav-item'>
             <a class='nav-link' href='carrito.php'>Carrito</a>
           </li>
+        <?php endif;?>
         </ul>
         <form class='form-inline my-2 my-lg-0'>
           <input class='form-control mr-sm-2' type='search' placeholder='Search' aria-label='Search'>

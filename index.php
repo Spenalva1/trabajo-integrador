@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include 'functions.php';
 
@@ -24,7 +25,6 @@ if ($_POST) {
   }
 }
 
-session_start();
 
 
 
