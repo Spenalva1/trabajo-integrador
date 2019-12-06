@@ -114,6 +114,9 @@ if ($_POST) {
 
     if (!isset($errors)) {
         if ($_FILES["img"]["error"] === UPLOAD_ERR_OK) {
+            if(!is_dir('profile_img')){
+                mkdir('profile_img');
+            }
             move_uploaded_file($img, $imgUser);
         }
         $json[] = $newUser;
