@@ -49,7 +49,11 @@ class Mark
         $link = Connection::connect();
         $stmt = $link->prepare("delete from marks where id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
-        $stmt->execute();
+
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
     }
 
     public function modifyMark()
@@ -61,8 +65,6 @@ class Mark
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);
         if($stmt->execute()){
-            $this->setId($link->lastInsertId());
-            $this->setName($name);
             return true;
         }
         return false;
