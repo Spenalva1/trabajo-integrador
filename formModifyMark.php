@@ -2,6 +2,7 @@
 
 require 'clases/Connection.php';
 require 'clases/Mark.php';
+require 'clases/Validator.php';
 
 if ($_GET) {
     $Mark = new Mark;
@@ -11,9 +12,6 @@ if ($_GET) {
 if ($_POST) {
     $Mark = new Mark;
     $check = $Mark->modifyMark();
-    if($check){
-        header('location: adminMarks.php');
-    }
 }
 
 ?>
@@ -37,15 +35,38 @@ if ($_POST) {
     <main class="container">
         <h1>Modificar marca</h1>
 
+        <?php if ($_POST) { ?>
+            <?php
+            $mensaje = 'No se pudo Modificar la Marca. ';
+            $mensaje .= $check;
+            $class = 'danger';
+            if (!$check) {
+                $class = 'success';
+                $mensaje = 'Marca modificada con exito';
+            }
+
+            ?>
+            <div class="alert alert-<?= $class; ?>">
+                <?= $mensaje ?>
+            </div>
+
+            <a href="adminMarks.php">Volver</a>
+
+        <?php } else { ?>
+
+            <form action="" method="POST">
+                Modificar:
+                <input type="text" name="name" value="<?= $Mark->getName() ?>"> <br><br>
+                <input type="text" name="id" style="display: none" value="<?= $Mark->getId() ?>">
+                <input type="button" value="Volver" onclick="location.href='adminMarks.php';">
+                <input type="submit" value="Modificar">
+            </form>
+
+        <?php } ?>
 
 
-        <form action="" method="POST">
-            Modificar: 
-            <input type="text" name="name" value="<?= $Mark->getName() ?>"> <br><br>
-            <input type="text" name="id" style="display: none" value="<?= $Mark->getId() ?>">
-            <input type="button" value="Volver" onclick="location.href='adminMarks.php';">
-            <input type="submit" value="Modificar">
-        </form>
+
+
     </main>
 
 </body>

@@ -2,6 +2,7 @@
 
 require 'clases/Connection.php';
 require 'clases/Mark.php';
+require 'clases/Validator.php';
 
 if ($_POST) {
     $Mark = new Mark;
@@ -32,9 +33,10 @@ if ($_POST) {
 
     <?php if ($_POST) { ?>
         <?php
-        $mensaje = 'No se pudo agregar la Marca';
+        $mensaje = 'No se pudo agregar la Marca. ';
+        $mensaje .= $check;
         $class = 'danger';
-        if ($check) {
+        if (!$check) {
             $class = 'success';
             $mensaje = 'Marca ' . $Mark->getName();
             $mensaje .= ' agregada con exito (id: ' . $Mark->getId() . ')';
