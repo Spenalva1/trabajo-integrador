@@ -1,7 +1,6 @@
 <?php
 
 class Validator{
-    
     static function validateMarkAdd($link){
 
         $name = $_POST['name'];
@@ -19,5 +18,24 @@ class Validator{
             return false;
         }
     }
+    
+    static function validateCategoryAdd($link){
 
+        $name = $_POST['name'];
+
+        $stmt = $link->prepare("select name from categories where name = :name");
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        
+        
+        if($result){
+            return 'La categoría "' . $result['name'] . '" ya ha sido agregada';
+        }else{
+            return false;
+        }
+    }
+    
+    
 }
