@@ -4,7 +4,7 @@
         <a href='index.php'><img src='img/logo-dh.PNG' alt=''></a>
       </article>
       <article class='usuario-acciones'>
-        <?php if (isset($_SESSION['userId'])) :?>
+        <?php if (isset($_SESSION['customerId'])) :?>
           <a href='logOut.php' id='registrarme'><button type="button" class="btn btn-danger">Log Out</button></a>
         <?php else: ?>
           <a href='registro.php' id='registrarme'>Crear cuenta</a>
@@ -34,7 +34,7 @@
             <a class='nav-link' href='faq.php'>Ayuda</a>
           </li>
           <li class='nav-item'>
-          <?php if (isset($_SESSION['userId'])) :?>
+          <?php if (isset($_SESSION['customerId'])) :?>
             <a class='nav-link' href='perfil.php'>Perfil</a>
           </li>
           <li class='nav-item'>

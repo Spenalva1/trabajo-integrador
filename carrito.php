@@ -1,7 +1,7 @@
 <?php
-session_start();
+include 'clases/Session.php';
 
-if (!$_SESSION) {
+if (!Session::checkIfAdminIsLogged()) {
   header('location: index.php');
 }
 
