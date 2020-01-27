@@ -1,5 +1,11 @@
 <?php
-  session_start();
+include 'clases/Connection.php';
+include 'clases/Product.php';
+session_start();
+
+$Product = new Product;
+$products = $Product->listProducts();
+
 
 ?>
 
@@ -25,134 +31,15 @@
       <h2>PRODUCTOS</h2>
       <section class="row products-list">
 
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
-        <div class="product-container col-12 col-md-4 col-lg-3">
-          <a href="producto-detalle.php" class="product">
-            <img class="img-fluid img-thumbnail" src="img/product.jpg" alt="">
-            <h3 class="product-name">Nombre</h3>
-            <p class="product-short-description">short description Lorem ipsum dolor sit amet consectetur.</p>
-            <span class="product-price">$$$$</span>
-          </a>
-        </div>
+        <?php foreach($products as $product){ ?>
+          <div class="product-container col-12 col-md-4 col-lg-3">
+            <a href="producto-detalle.php?id=<?= $product["id"] ?>" class="product">
+              <img class="img-fluid img-thumbnail" src="product_img/<?= $product["id"] ?>.jpg" alt="">
+              <h3 class="product-name"><?= $product["name"] ?></h3>
+              <span class="product-price">$<?= $product["price"] ?></span>
+            </a>
+          </div>
+        <?php } ?>
 
 
       </section>

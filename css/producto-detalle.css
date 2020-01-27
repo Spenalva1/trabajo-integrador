@@ -11,6 +11,8 @@ section article.product-images{
     border-radius: 5px;
     padding: 10px;
     margin: 0;
+    display: flex;
+    justify-content: center;
 }
 
 section article.product-images .main-image{
