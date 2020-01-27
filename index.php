@@ -1,45 +1,6 @@
 <?php
 session_start();
-
-if ($_POST) {
-  $emails = file_get_contents("newsletter.json");
-  $emails = json_decode($emails, true);
-
-
-  if (strlen($_POST["email"]) == 0) {
-    $errors["email"] = "Completar campo";
-  } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-    $errors["email"] = "Formato de email incorrecto";
-  }else if (!checkIfAvailableByEmail($emails, $_POST["email"])) {
-    $errors["email"] = "";
-  } else {
-    $newEmail["email"] = $_POST["email"];
-  }
-
-  if (!isset($errors)) {
-    $emails[] = $newEmail;
-    $emails = json_encode($emails);
-    file_put_contents("newsletter.json", $emails);
-  }
-}
-
-
-
-
-
-
-
 ?>
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
