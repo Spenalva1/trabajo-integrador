@@ -17,7 +17,7 @@ class Session
         $_SESSION = array();
         session_destroy();
         setcookie("rememberEmail", "", time() - 1);
-        setcookie("rememberPass", "", time() - 1);
+        setcookie("rememberPassword", "", time() - 1);
         header("location: index.php");
     }
 
@@ -32,7 +32,6 @@ class Session
 
     public static function logCustomerIn()
     {
-        session_start();
         $email = $_POST["email"];
         $password = $_POST["password"];
         $errors = Validator::validateCustomerLogIn(Connection::connect());
