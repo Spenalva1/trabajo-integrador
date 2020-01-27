@@ -40,11 +40,11 @@ if ($_POST) {
     <?php include 'nav.php'; ?>
 
     <main class="container">
-        <h1>Formulario de alta de un producto</h1>
+        <h1>Formulario de modificación de un producto</h1>
 
         <?php if ($_POST) { ?>
             <?php
-            $mensaje = 'No se pudo agregar el Producto. ';
+            $mensaje = 'No se pudo modificar el Producto. ';
             $class = 'danger';
             if (!$errors) {
                 $class = 'success';
