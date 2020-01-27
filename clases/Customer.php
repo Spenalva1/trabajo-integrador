@@ -62,13 +62,95 @@ class Customer
         }
     }
 
+    public function getCustomerById()
+    {
+        $id = $_GET['id'];
+        $link = Connection::connect();
+        $stmt = $link->prepare("select * from customers where id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            $this->setId($result["id"]);
+            $this->setFirst_name($result["first_name"]);
+            $this->setLast_name($result["last_name"]);
+            $this->setEmail($result["email"]);
+            $this->setPassword($result["password"]);
+            $this->setBirthdate($result["birthdate"]);
+            $this->setPhone($result["phone"]);
+            $this->setDni($result["dni"]);
+            $this->setAddress($result["address"]);
+        }
+    }
+
 
     public function modifyCustomer()
     {
+        $id = $this->getId();
+        $first_name = $_POST["first_name"];
+        $last_name = $_POST["last_name"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $repassword = $_POST["repassword"];
+        $birthdate = $_POST["birthdate"];
+        $phone = $_POST["phone"];
+        $dni = $_POST["dni"];
+        $address = $_POST["address"];
+
+        $modified = [
+            "email" => $this->getEmail(),
+            "dni" =>  $this->getDni()
+        ];
+
+        
+
+        $link = Connection::connect();
+        $errors = Validator::validateCustomerAdd($link, $modified);
+
+        if ($errors) {
+            return $errors;
+        } else {
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $link->prepare("update customers set 
+                                    first_name = :first_name,
+                                    last_name = :last_name,
+                                    email = :email,
+                                    password = :password,
+                                    birthdate = :birthdate,
+                                    phone = :phone,
+                                    dni = :dni,
+                                    address = :address
+                                    where id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->bindParam(':first_name', $first_name, PDO::PARAM_STR);
+            $stmt->bindParam(':last_name', $last_name, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $hash, PDO::PARAM_STR);
+            $stmt->bindParam(':birthdate', $birthdate, PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $phone, PDO::PARAM_STR);
+            $stmt->bindParam(':dni', $dni, PDO::PARAM_STR);
+            $stmt->bindParam(':address', $address, PDO::PARAM_STR);
+
+            if ($stmt->execute()) {
+                if($_FILES["img"]){
+                    move_uploaded_file($_FILES["img"]["tmp_name"], 'profile_img/' . $this->getid() . '.jpg');
+                }
+                return false;
+            }
+            return true;
+        }
     }
 
     public function deleteCustomer()
     {
+        $id = $_POST['id'];
+        $link = Connection::connect();
+        $stmt = $link->prepare("delete from customers where id = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+        return false;
     }
 
 
