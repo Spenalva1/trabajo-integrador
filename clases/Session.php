@@ -11,6 +11,16 @@ class Session
         return false;
     }
 
+    public static function logOut()
+    {
+        session_start();
+        $_SESSION = array();
+        session_destroy();
+        setcookie("rememberEmail", "", time() - 1);
+        setcookie("rememberPass", "", time() - 1);
+        header("location: index.php");
+    }
+
     public static function checkIfAdminIsLogged()
     {
         session_start();
