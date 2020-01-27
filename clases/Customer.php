@@ -79,9 +79,8 @@ class Customer
         return $errors;
     }
 
-    public function getCustomerById()
+    public function getCustomerById($id)
     {
-        $id = $_GET['id'];
         $link = Connection::connect();
         $stmt = $link->prepare("select * from customers where id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_STR);

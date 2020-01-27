@@ -3,24 +3,18 @@
 require 'clases/Connection.php';
 require 'clases/Customer.php';
 require 'clases/Validator.php';
+require 'clases/Session.php';
 
-// if ($_SESSION["userId"]) {
-//   $currentUser = getUserById($json, $_SESSION["userId"]);
-// }else{
-//   header('location: index.php');
-// }
-
-
-if ($_GET) {
-  $Customer = new Customer;
-  $Customer->getCustomerById();
+if (!Session::checkIfCustomerIsLogged()) {
+  header('location: index.php');
 }
+
+$Customer = new Customer;
+$Customer->getCustomerById($_SESSION["customerId"]);
 
 if ($_POST) {
   $errors = $Customer->modifyCustomer();
 }
-
-
 ?>
 
 

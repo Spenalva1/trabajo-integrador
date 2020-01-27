@@ -5,7 +5,7 @@ require 'clases/Customer.php';
 
 if ($_GET) {
     $Customer = new Customer;
-    $Customer->getCustomerById();
+    $Customer->getCustomerById($_GET["id"]);
 }
 
 if ($_POST) {

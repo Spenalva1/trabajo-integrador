@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-include 'functions.php';
-
 if ($_POST) {
   $emails = file_get_contents("newsletter.json");
   $emails = json_decode($emails, true);
