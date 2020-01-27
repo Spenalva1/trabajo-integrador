@@ -2,128 +2,19 @@
 
 session_start();
 
-if($_SESSION){
+if ($_SESSION) {
     header('location: index.php');
 }
 
-include("functions.php");
+include 'clases/Customer.php';
+include 'clases/Connection.php';
+include 'clases/Validator.php';
+
 
 
 if ($_POST) {
-
-    $json = file_get_contents("users.json");
-    $json = json_decode($json, true);
-
-    $newUser["id"] = count($json);
-
-
-    if (strlen($_POST["name"]) == 0) {
-        $errors["name"] = "Completar campo";
-    } else {
-        $newUser["name"] = trim($_POST["name"]);
-    }
-
-
-
-    if (strlen($_POST["email"]) == 0) {
-        $errors["email"] = "Completar campo";
-    } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-        $errors["email"] = "Formato de email incorrecto";
-    } else if (!checkIfAvailableByEmail($json, $_POST["email"])) {
-        $errors["email"] = "El email ya se encuentra en uso";
-    } else {
-        $newUser["email"] = trim($_POST["email"]);
-    }
-
-
-    if (strlen($_POST["pass"]) == 0) {
-        $errors["pass"] = "Completar campo";
-    } else if (strlen($_POST["pass"]) < 8) {
-        $errors["pass"] = "La contraseña debe tener al menos 8 caracteres";
-    } else if ($_POST["pass"] != $_POST["repass"]) {
-        $errors["repass"] = "Las contraseñas no coinciden";
-    } else {
-        $newUser["password"] = password_hash($_POST["pass"], PASSWORD_DEFAULT);
-    }
-
-
-
-
-    if ($_FILES["img"]["error"] === UPLOAD_ERR_OK) {
-        $imgName = $_FILES["img"]["name"];
-        $img = $_FILES["img"]["tmp_name"];
-        $ext = pathinfo($imgName, PATHINFO_EXTENSION);
-
-        if ($ext == "jpg" || $ext == "jpeg" || $ext == "png" || ".PNG") {
-            $imgUser = "profile_img/" . count($json) . "." . $ext;
-            $newUser["img"] = $imgUser;
-        } else {
-            $errors["img"] = "La imagen debe ser .jpg , .jpeg o .png";
-            $_FILES["img"]["error"] = 4;
-        }
-    } else {
-        $newUser["img"] = "img/perfil.png";
-    }
-
-
-
-
-
-    if (strlen($_POST["dni"]) == 0) {
-        $errors["dni"] = "Completar campo";
-    } else if (!is_numeric($_POST["dni"])) {
-        $errors["dni"] = "Debe ingresar un valor numérico";
-    } else if (!checkIfAvailableByDni($json, $_POST["dni"])) {
-        $errors["dni"] = "El dni ya se encuentra en uso";
-    } else {
-        $newUser["dni"] = trim($_POST["dni"]);
-    }
-
-
-
-
-
-    if (strlen($_POST["birthdate"]) == 0) {
-        $errors["birthdate"] = "Completar campo";
-    } else {
-        $birthdate = strtotime(date('Y-m-d', strtotime($_POST["birthdate"])) . " +18 years");
-        if ($birthdate < time()) {
-            $newUser["birthdate"] = $_POST["birthdate"];
-        } else {
-            $errors["birthdate"] = "Debes ser mayor a 18 años";
-        }
-    }
-
-
-    if (strlen($_POST["phone"]) == 0) {
-        $errors["phone"] = "Completar campo";
-    } else if (!is_numeric($_POST["phone"])) {
-        $errors["phone"] = "Debe ingresar un valor numérico";
-    } else {
-        $newUser["phone"] = trim($_POST["phone"]);
-    }
-
-
-    if (strlen($_POST["address"]) == 0) {
-        $errors["address"] = "Completar campo";
-    } else {
-        $newUser["address"] = trim($_POST["address"]);
-    }
-
-
-
-    if (!isset($errors)) {
-        if ($_FILES["img"]["error"] === UPLOAD_ERR_OK) {
-            if(!is_dir('profile_img')){
-                mkdir('profile_img');
-            }
-            move_uploaded_file($img, $imgUser);
-        }
-        $json[] = $newUser;
-        $json = json_encode($json);
-        file_put_contents("users.json", $json);
-        header("location: ingreso.php");
-    }
+    $Customer = new Customer;
+    $errors = $Customer->addCustomer();
 }
 
 
@@ -164,72 +55,79 @@ if ($_POST) {
                 <form method="post" action="" enctype="multipart/form-data">
 
 
-                    <!-- NOMBRE COMPLETO -->
+                    <!-- NOMBRE -->
                     <div class="form-group">
-                        <label for="name">Nombre Completo</label>
-                        <input value="<?php echo (isset($_POST["name"])) ? $_POST["name"] : "" ?>" name="name" type="text" class="form-control <?= ($_POST) ? validateInput($errors, 'name') : ''; ?> " id="name" placeholder="Ingrese su nombre completo">
-                        <?php echo (isset($errors["name"])) ? "<div class='invalid-feedback'>" . $errors["name"] . "</div>" : "" ?>
+                        <label for="first_name">Nombre</label>
+                        <input value="<?php echo (isset($_POST["first_name"])) ? $_POST["first_name"] : "" ?>" name="first_name" type="text" class="form-control" id="name" placeholder="Ingrese su nombre">
+                        <?php echo (isset($errors["first_name"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["first_name"] . "</div>" : "" ?>
+                    </div>
+
+                    <!-- APELLIDO -->
+                    <div class="form-group">
+                        <label for="last_name">Apellido</label>
+                        <input value="<?php echo (isset($_POST["last_name"])) ? $_POST["last_name"] : "" ?>" name="last_name" type="text" class="form-control" id="name" placeholder="Ingrese su apellido">
+                        <?php echo (isset($errors["last_name"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["last_name"] . "</div>" : "" ?>
                     </div>
 
 
                     <!-- EMAIL -->
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input value="<?php echo (isset($_POST["email"])) ? $_POST["email"] : "" ?>" name="email" type="text" class="form-control <?= ($_POST) ? validateInput($errors, 'email') : ''; ?>" id="email" aria-describedby="emailHelp" placeholder="Ingrese su email">
-                        <?php echo (isset($errors["email"])) ? "<div class='invalid-feedback'>" . $errors["email"] . "</div>" : "" ?>
+                        <input value="<?php echo (isset($_POST["email"])) ? $_POST["email"] : "" ?>" name="email" type="text" class="form-control" placeholder="Ingrese su email">
+                        <?php echo (isset($errors["email"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["email"] . "</div>" : "" ?>
                     </div>
 
 
                     <!-- CONTRASEÑA -->
                     <div class="form-group">
-                        <label for="pass">Contraseña</label>
-                        <input name="pass" type="password" class="form-control <?= ($_POST) ? validateInput($errors, 'pass') : ''; ?>" id="pass" placeholder="Ingrese su contraseña">
-                        <?php echo (isset($errors["pass"])) ? "<div class='invalid-feedback'>" . $errors["pass"] . "</div>" : "" ?>
+                        <label for="password">Contraseña</label>
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+                        <?php echo (isset($errors["password"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["password"] . "</div>" : "" ?>
                     </div>
 
 
                     <!-- CONFIRMACION DE CONTRASEÑA -->
                     <div class="form-group">
-                        <label for="repass">Confirme Contraseña</label>
-                        <input name="repass" type="password" class="form-control <?= ($_POST) ? validateInput($errors, 'repass') : ''; ?>" id="repass" placeholder="Confirme su Contraseña">
-                        <?php echo (isset($errors["repass"])) ? "<div class='invalid-feedback'>" . $errors["repass"] . "</div>" : "" ?>
+                        <label for="repassword">Confirme Contraseña</label>
+                        <input name="repassword" type="password" class="form-control" id="repassword" placeholder="Confirme su Contraseña">
+                        <?php echo (isset($errors["repassword"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["repassword"] . "</div>" : "" ?>
                     </div>
 
                     <!-- FOTO DE PERFIL -->
                     <div class="form-group">
                         <label for="img">Foto de perfil</label> <br>
                         <input name="img" type="file" id="img">
-                        <?php echo (isset($errors["img"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["img"] . "</div>" : "" ?>
+                        <?php echo (isset($errors["img"])) ? "<div class='invalid-feedback' style='display: block' style='display: block'>" . $errors["img"] . "</div>" : "" ?>
                     </div>
 
                     <!-- DNI -->
                     <div class="form-group">
                         <label for="dni">DNI</label>
-                        <input value="<?php echo (isset($_POST["dni"])) ? $_POST["dni"] : "" ?>" name="dni" type="text" class="form-control <?= ($_POST) ? validateInput($errors, 'dni') : ''; ?>" id="dni" placeholder="Ingrese su DNI">
-                        <?php echo (isset($errors["dni"])) ? "<div class='invalid-feedback'>" . $errors["dni"] . "</div>" : "" ?>
+                        <input value="<?php echo (isset($_POST["dni"])) ? $_POST["dni"] : "" ?>" name="dni" type="text" class="form-control" id="dni" placeholder="Ingrese su DNI">
+                        <?php echo (isset($errors["dni"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["dni"] . "</div>" : "" ?>
                     </div>
 
 
                     <!-- FECHA DE NACIMIENTO -->
                     <div class="form-group">
                         <label for="birthdate">Fecha de nacimiento</label>
-                        <input value="<?php echo (isset($_POST["birthdate"])) ? $_POST["birthdate"] : "" ?>" name="birthdate" type="date" class="form-control <?= ($_POST) ? validateInput($errors, 'birthdate') : ''; ?>" id="birthdate">
-                        <?php echo (isset($errors["birthdate"])) ? "<div class='invalid-feedback'>" . $errors["birthdate"] . "</div>" : "" ?>
+                        <input value="<?php echo (isset($_POST["birthdate"])) ? $_POST["birthdate"] : "" ?>" name="birthdate" type="date" class="form-control" id="birthdate">
+                        <?php echo (isset($errors["birthdate"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["birthdate"] . "</div>" : "" ?>
                     </div>
 
 
                     <!-- TELEFONO -->
                     <div class="form-group">
                         <label for="phone">Teléfono</label>
-                        <input value="<?php echo (isset($_POST["phone"])) ? $_POST["phone"] : "" ?>" name="phone" type="text" class="form-control <?= ($_POST) ? validateInput($errors, 'phone') : ''; ?>" id="phone" placeholder="Ingrese su numero de teléfono">
-                        <?php echo (isset($errors["phone"])) ? "<div class='invalid-feedback'>" . $errors["phone"] . "</div>" : "" ?>
+                        <input value="<?php echo (isset($_POST["phone"])) ? $_POST["phone"] : "" ?>" name="phone" type="text" class="form-control" id="phone" placeholder="Ingrese su numero de teléfono">
+                        <?php echo (isset($errors["phone"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["phone"] . "</div>" : "" ?>
                     </div>
 
                     <!-- DIRECCION -->
                     <div class="form-group">
                         <label for="phone">Dirección</label>
-                        <input value="<?php echo (isset($_POST["address"])) ? $_POST["address"] : "" ?>" name="address" type="text" class="form-control <?= ($_POST) ? validateInput($errors, 'address') : ''; ?>" id="address" placeholder="Ingrese su numero de dirección">
-                        <?php echo (isset($errors["address"])) ? "<div class='invalid-feedback'>" . $errors["address"] . "</div>" : "" ?>
+                        <input value="<?php echo (isset($_POST["address"])) ? $_POST["address"] : "" ?>" name="address" type="text" class="form-control" id="address" placeholder="Ingrese su numero de dirección">
+                        <?php echo (isset($errors["address"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["address"] . "</div>" : "" ?>
                     </div>
 
 

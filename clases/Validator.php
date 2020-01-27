@@ -2,6 +2,104 @@
 
 class Validator
 {
+    static function validateCustomerAdd($link)
+    {
+
+
+        $first_name = $_POST["first_name"];
+        $last_name = $_POST["last_name"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $repassword = $_POST["repassword"];
+        $birthdate = $_POST["birthdate"];
+        $phone = $_POST["phone"];
+        $dni = $_POST["dni"];
+        $address = $_POST["address"];
+
+        if (strlen($first_name) == 0) {
+            $errors["first_name"] = "Completar campo";
+        }
+
+        if (strlen($last_name) == 0) {
+            $errors["last_name"] = "Completar campo";
+        }
+
+        if (strlen($email) == 0) {
+            $errors["email"] = "Completar campo";
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors["email"] = "Formato de email incorrecto";
+        } else {
+            $stmt = $link->prepare("select email from customers where email = :email");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {                                                    // ya existe un cliente con ese email?
+                $errors["email"] = "El email ya se encuentra en uso";
+            }
+        }
+
+        if (strlen($password) == 0) {
+            $errors["password"] = "Completar campo";
+        } else if (strlen($password) < 8) {
+            $errors["password"] = "La contraseña debe tener al menos 8 caracteres";
+        } else if ($password != $repassword) {
+            $errors["repassword"] = "Las contraseñas no coinciden";
+        }
+
+
+
+        if ($_FILES["img"]["error"] === UPLOAD_ERR_OK) {
+            $ext = pathinfo($_FILES["img"]["name"], PATHINFO_EXTENSION);
+            if ($ext != "jpg") {
+                $errors["img"] = "El archivo debe ser '.jpg'";
+            }
+        }
+
+
+        if (strlen($dni) == 0) {
+            $errors["dni"] = "Completar campo";
+        } else if (!is_numeric($dni)) {
+            $errors["dni"] = "Debe ingresar un valor numérico";
+        } else {
+            $stmt = $link->prepare("select dni from customers where dni = :dni");
+            $stmt->bindParam(':dni', $dni, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {                                                    // ya existe un cliente con ese dni?
+                $errors["dni"] = "El dni ya se encuentra en uso";
+            }
+        }
+
+        if (strlen($birthdate) == 0) {
+            $errors["birthdate"] = "Completar campo";
+        } else {
+            $birthdate = strtotime(date('Y-m-d', strtotime($birthdate)) . " +18 years");
+            if ($birthdate < time()) {
+                $newUser["birthdate"] = $birthdate;
+            } else {
+                $errors["birthdate"] = "Debes ser mayor a 18 años";
+            }
+        }
+
+        if (strlen($phone) == 0) {
+            $errors["phone"] = "Completar campo";
+        } else if (!is_numeric($phone)) {
+            $errors["phone"] = "Debe ingresar un valor numérico";
+        }
+
+        if (strlen($address) == 0) {
+            $errors["address"] = "Completar campo";
+        }
+
+
+        if (isset($errors)) {
+            return $errors;
+        }
+        
+        return false;
+    }
+
+
     static function validateMarkAdd($link)
     {
 
@@ -52,8 +150,8 @@ class Validator
 
         if (strlen($name) == 0) {                                                           //lleno el campo?
             $errors['name'] = 'Completar campo';
-        } else if(!($modified == $name)){     //se esta modificando un producto sin modificar su nombre?
-            
+        } else if (!($modified == $name)) {     //se esta modificando un producto sin modificar su nombre?
+
             // si entra aca significa que se está agregando un producto o que se esta modificando el nombre de un producto
 
             $stmt = $link->prepare("select name from products where name = :name");
@@ -87,7 +185,7 @@ class Validator
             if ($ext != "jpg") {
                 $errors["img"] = "El archivo debe ser '.jpg'";
             }
-        } else if (!$modified){                                         // no se subio el archivo y tampoco se esta modificando un producto?
+        } else if (!$modified) {                                         // no se subio el archivo y tampoco se esta modificando un producto?
             $errors["image"] = "No se subió ningún archivo";
         }
 
