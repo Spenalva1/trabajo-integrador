@@ -1,40 +1,16 @@
 <?php
 
-include 'functions.php';
+include 'clases/Customer.php';
+include 'clases/Connection.php';
+include 'clases/Validator.php';
+include 'clases/Session.php';
 
+if(Session::checkIfCustomerIsLogged()){
+    header('location: index.php');
+}
 
 if ($_POST) {
-
-
-    $json = file_get_contents("users.json");
-    $json = json_decode($json, true);
-
-
-    if (strlen($_POST["email"]) == 0) {
-        $errors["email"] = "Completar campo";
-    } else if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-        $errors["email"] = "Formato de email incorrecto";
-    } else if (getUserByEmail($json, $_POST["email"]) === null) {
-        $errors["email"] = "El email no se encuentra registrado";
-    } else {
-        $user = getUserByEmail($json, $_POST["email"]);
-    }
-
-    if (!isset($errors)) {
-        $newPass = generateRandomString();
-        $user["password"] = password_hash($newPass, PASSWORD_DEFAULT);
-
-
-        foreach ($json as $userf) {
-            if ($userf == getUserByEmail($json, $_POST["email"])) {
-                $newJSON[] = $user;
-            } else {
-                $newJSON[] = $userf;
-            }
-        }
-        $newJSON = json_encode($newJSON);
-        file_put_contents("users.json", $newJSON);
-    }
+    $errors = Customer::forgottenPass();
 }
 
 
@@ -73,12 +49,12 @@ if ($_POST) {
                 <div class="main-content mt-3">
                     <a href="index.php"><img src="img/logo-dh.PNG" alt=""></a>
 
-                    <?php if (!isset($newPass)) : ?>
+                    <?php if (!isset($errors["newPass"])) : ?>
 
                         <form method="post" action="">
-                            <div class="form-group">
-                                <input name="email" type="text" class="form-control <?= ($_POST) ? validateInput($errors, 'email') : ''; ?>" id="email" aria-describedby="emailHelp" placeholder="Email" value="<?php echo (isset($_POST["email"])) ? $_POST["email"] : "" ?>">
-                                <?php echo (isset($errors["email"])) ? "<div class='invalid-feedback'>" . $errors["email"] . "</div>" : "" ?>
+                        <div class="form-group">
+                                <input name="email" type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email" value="<?php echo (isset($_POST["email"])) ? $_POST["email"] : "" ?>">
+                                <?php echo (isset($errors["email"])) ? "<div class='invalid-feedback' style='display: block'>" . $errors["email"] . "</div>" : "" ?>
                             </div>
                             <button type="submit" class="btn btn-primary">Recuperar contraseña</button>
                         </form>
@@ -87,7 +63,7 @@ if ($_POST) {
 
                         <span>Su nueva contraseña es:</span>
 
-                        <h2> <?= $newPass ?> </h2>
+                        <h2> <?= $errors["newPass"] ?> </h2>
 
                         <span style="text-align: center">Para cambiarla, ingrese a su cuenta y cambiela en su pagina de perfil</span>
 

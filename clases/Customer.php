@@ -62,6 +62,23 @@ class Customer
         }
     }
 
+    public static function forgottenPass(){
+        $errors = Validator::validateForgottenPass();
+        if(!$errors){
+            $email = $_POST["email"];
+            $newPass = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(15/strlen($x)) )),1,15);
+            $hash = password_hash($newPass, PASSWORD_DEFAULT);
+            $link = Connection::connect();
+            $stmt = $link->prepare("update customers set password = :hash where email = :email");
+            $stmt->bindParam(':hash', $hash, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            
+            return ["newPass" => $newPass];
+        }
+        return $errors;
+    }
+
     public function getCustomerById()
     {
         $id = $_GET['id'];

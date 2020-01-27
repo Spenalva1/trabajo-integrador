@@ -2,6 +2,25 @@
 
 class Validator
 {
+    public static function validateForgottenPass()
+    {
+        $email = $_POST["email"];
+        if (strlen($_POST["email"]) == 0) {
+            $errors["email"] = "Completar campo";
+        } else {
+            $link = Connection::connect();
+            $stmt = $link->prepare("select id from customers where email = :email");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return false;
+            }
+            $errors["email"] = "El email ingresado no se encuentra registrado";
+        }
+        return $errors;
+    }
+
     public static function validateCustomerLogIn($link)
     {
         $email = $_POST["email"];
@@ -26,7 +45,7 @@ class Validator
         }
 
         if (!isset($errors)) {
-            if(password_verify($password, $result["password"])){
+            if (password_verify($password, $result["password"])) {
                 $errors["ok"] = $result["id"];
             }
             $errors["password"] = "contraseña incorrecta";
