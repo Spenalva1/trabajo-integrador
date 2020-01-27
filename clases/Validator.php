@@ -2,7 +2,42 @@
 
 class Validator
 {
-    static function validateProductAdd($link, $modified = null) //$modified tendra un valor no null solo cuando se este modificando un producto
+    public static function validateCustomerLogIn($link)
+    {
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+
+        if (strlen($email) == 0) {
+            $errors["email"] = 'Completar campo';
+        } else {
+            $stmt = $link->prepare("select id, password from customers
+                                where email = :email");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$result) {
+                $errors["email"] = 'El email ingresado no se encuentra registrado';
+            }
+        }
+
+        if (strlen($password) == 0) {
+            $errors["password"] = 'completar campo';
+        }
+
+        if (!isset($errors)) {
+            if(password_verify($password, $result["password"])){
+                $errors["ok"] = $result["id"];
+            }
+            $errors["password"] = "contraseña incorrecta";
+        }
+
+        return $errors;
+    }
+
+
+
+    public static function validateProductAdd($link, $modified = null) //$modified tendra un valor no null solo cuando se este modificando un producto
     {
         $name = $_POST['name'];
         $price = $_POST['price'];
@@ -59,7 +94,7 @@ class Validator
     }
 
 
-    static function validateCustomerAdd($link, $modified = null)  //$modified tendra un valor no null solo cuando se este modificando un producto
+    public static function validateCustomerAdd($link, $modified = null)  //$modified tendra un valor no null solo cuando se este modificando un producto
     {
         $first_name = $_POST["first_name"];
         $last_name = $_POST["last_name"];
@@ -98,7 +133,7 @@ class Validator
 
 
 
-        if(!$modified){
+        if (!$modified) {
             if (strlen($password) == 0) {
                 $errors["password"] = "Completar campo";
             } else if (strlen($password) < 8) {
@@ -122,7 +157,7 @@ class Validator
             $errors["dni"] = "Completar campo";
         } else if (!is_numeric($dni)) {
             $errors["dni"] = "Debe ingresar un valor numérico";
-        } else if(!($modified["dni"] == $dni )){//se esta modificando un cliente sin modificar su dni?
+        } else if (!($modified["dni"] == $dni)) { //se esta modificando un cliente sin modificar su dni?
 
             // si entra aca significa que se está agregando un cliente o que se esta modificando el dni de un cliente
             $stmt = $link->prepare("select dni from customers where dni = :dni");
@@ -164,7 +199,7 @@ class Validator
     }
 
 
-    static function validateMarkAdd($link)
+    public static function validateMarkAdd($link)
     {
 
         $name = $_POST['name'];
