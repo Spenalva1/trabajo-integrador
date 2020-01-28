@@ -125,7 +125,12 @@ class Customer
         if ($errors) {
             return $errors;
         } else {
-            $hash = password_hash($password, PASSWORD_DEFAULT);
+            if(strlen($password) > 0){
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+            }else{
+                echo 'hola';
+                $hash = $this->getPassword();
+            }
             $stmt = $link->prepare("update customers set 
                                     first_name = :first_name,
                                     last_name = :last_name,

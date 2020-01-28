@@ -56,7 +56,7 @@ if ($_POST) {
               <div class="form-group">
                 <label for="pass">Cambiar contraseña</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="**********">
-                <?php echo (isset($errors["pass"])) ? "<div class='invalid-feedback' style='display:block'>" . $errors["password"] . "</div>" : "" ?>
+                <?php echo (isset($errors["password"])) ? "<div class='invalid-feedback' style='display:block'>" . $errors["password"] . "</div>" : "" ?>
               </div>
 
               <!-- RE CONTRASEÑA -->

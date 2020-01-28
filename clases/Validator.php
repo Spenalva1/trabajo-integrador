@@ -134,7 +134,7 @@ class Validator
     }
 
 
-    public static function validateCustomerAdd($link, $modified = null)  //$modified tendra un valor no null solo cuando se este modificando un producto
+    public static function validateCustomerAdd($link, $modified = null)  //$modified tendra un valor no null solo cuando se este modificando un cliente
     {
         $first_name = $_POST["first_name"];
         $last_name = $_POST["last_name"];
@@ -174,12 +174,24 @@ class Validator
 
 
         if (!$modified) {
+            // cuando se esta creando un usuario nuevo
             if (strlen($password) == 0) {
                 $errors["password"] = "Completar campo";
             } else if (strlen($password) < 8) {
                 $errors["password"] = "La contraseña debe tener al menos 8 caracteres";
             } else if ($password != $repassword) {
                 $errors["repassword"] = "Las contraseñas no coinciden";
+            }
+        } else {
+            //cuando se esta modificando un usuario existente
+            if (strlen($password) > 0) {
+                //entra si el usuario esta queriendo modificar la contraseña
+                if (strlen($password) < 8) {
+                    $errors["password"] = "La contraseña debe tener al menos 8 caracteres";
+                }else if ($password != $repassword) {
+                    $errors["repassword"] = "Las contraseñas no coinciden";
+                }
+
             }
         }
 
