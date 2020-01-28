@@ -2,7 +2,11 @@
 
 require 'clases/Connection.php';
 require 'clases/Product.php';
+require 'clases/Session.php';
 
+if(!Session::checkIfAdminIsLogged()){
+  header('location: adminLogIn.php');
+}
 $Product = new Product;
 $products = $Product->listProducts();
 

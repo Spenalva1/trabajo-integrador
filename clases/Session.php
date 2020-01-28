@@ -46,4 +46,15 @@ class Session
             return $errors;
         }
     }
+
+    public static function logAdminIn()
+    {
+        if (Validator::validateAdminLogIn(Connection::connect())) {
+            $_SESSION["admin"] = "ok";
+            header("location: admin.php");
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

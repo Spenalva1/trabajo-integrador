@@ -2,7 +2,11 @@
 
 require 'clases/Connection.php';
 require 'clases/Mark.php';
+require 'clases/Session.php';
 
+if(!Session::checkIfAdminIsLogged()){
+  header('location: adminLogIn.php');
+}
 $Mark = new Mark;
 $marks = $Mark->listMarks();
 

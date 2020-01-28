@@ -1,10 +1,17 @@
 <?php
 
-require 'clases/Connection.php';
-require 'clases/Mark.php';
+include 'clases/Session.php';
 
-$Mark = new Mark;
-$marks = $Mark->listMarks();
+if(!Session::checkIfAdminIsLogged()){
+    header('location: adminLogIn.php');
+}
+
+
+
+if($_POST){
+    exit;
+    Session::logOut();
+}
 
 ?>
 
@@ -41,6 +48,10 @@ $marks = $Mark->listMarks();
             Administración de Usuarios
         </a>
     </div>
+
+    <br>
+
+    <a class="py-2" href="logOut.php">Log Out</a>
 </main>
 
 </body>

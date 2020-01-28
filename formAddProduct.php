@@ -5,7 +5,11 @@ require 'clases/Product.php';
 require 'clases/Category.php';
 require 'clases/Mark.php';
 require 'clases/Validator.php';
+require 'clases/Session.php';
 
+if(!Session::checkIfAdminIsLogged()){
+  header('location: adminLogIn.php');
+}
 $Mark = new Mark;
 $marks = $Mark->listMarks();
 

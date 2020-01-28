@@ -3,7 +3,11 @@
 require 'clases/Connection.php';
 require 'clases/Customer.php';
 require 'clases/Validator.php';
+require 'clases/Session.php';
 
+if(!Session::checkIfAdminIsLogged()){
+  header('location: adminLogIn.php');
+}
 if ($_GET) {
     $Customer = new Customer;
     $Customer->getCustomerById();

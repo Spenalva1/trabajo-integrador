@@ -1,10 +1,10 @@
 <?php
 
 include 'clases/Session.php';
+
 if(Session::checkIfCustomerIsLogged()){
     header('location: index.php');
 }
-// var_dump(Session::checkIfAdminIsLogged());
 
 if ($_POST) {
 

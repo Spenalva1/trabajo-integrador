@@ -54,6 +54,27 @@ class Validator
         return $errors;
     }
 
+    public static function validateAdminLogIn($link)
+    {
+        $user = $_POST["user"];
+        $password = $_POST["password"];
+
+        $stmt = $link->prepare("select id, password from admins
+                                where user = :user");
+        $stmt->bindParam(':user', $user, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+        if (!isset($errors)) {
+            if (password_verify($password, $result["password"])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 
     public static function validateProductAdd($link, $modified = null) //$modified tendra un valor no null solo cuando se este modificando un producto
