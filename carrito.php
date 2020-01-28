@@ -1,8 +1,22 @@
 <?php
 include 'clases/Session.php';
+include 'clases/Cart.php';
+include 'clases/Connection.php';
 
-if (!Session::checkIfAdminIsLogged()) {
+if (!Session::checkIfCustomerIsLogged()) {
   header('location: index.php');
+}
+
+
+$Cart = new Cart;
+$products = $Cart->listProducts();
+
+if ($_POST) {
+  if (isset($_POST["delete"])) {
+    $Cart->deleteProduct();
+  }else{
+    $Cart->modifyCuantityOfProduct();
+  }
 }
 
 ?>
@@ -28,71 +42,33 @@ if (!Session::checkIfAdminIsLogged()) {
   <div class="container-fluid">
     <main class="row">
       <section class="products-list col-12 col-md-7">
-        <article class="row product-added">
-          <img class="col-3 img-fluid img-thumbnail" src="img/product.jpg" alt="">
-          <div class="col-7 product-added-info">
-            <h4>Nombre del producto</h4>
-            <div class="quantity-container"><span class="quantity-label">Cantidad: </span><span class="quantity">5</span></div>
-            <span class="price">$$$$$$</span>
-          </div>
-          <div class="remove-btn col-2">
-            <button class="btn btn-danger">Quitar</button>
-          </div>
-        </article>
 
-        <article class="row product-added">
-          <img class="col-3 img-fluid img-thumbnail" src="img/product.jpg" alt="">
-          <div class="col-7 product-added-info">
-            <h4>Nombre del producto</h4>
-            <div class="quantity-container"><span class="quantity-label">Cantidad: </span><span class="quantity">5</span></div>
-            <span class="price">$$$$$$</span>
-          </div>
-          <div class="remove-btn col-2">
-            <button class="btn btn-danger">Quitar</button>
-          </div>
-        </article>
-
-        <article class="row product-added">
-          <img class="col-3 img-fluid img-thumbnail" src="img/product.jpg" alt="">
-          <div class="col-7 product-added-info">
-            <h4>Nombre del producto</h4>
-            <div class="quantity-container"><span class="quantity-label">Cantidad: </span><span class="quantity">5</span></div>
-            <span class="price">$$$$$$</span>
-          </div>
-          <div class="remove-btn col-2">
-            <button class="btn btn-danger">Quitar</button>
-          </div>
-        </article>
-
-        <article class="row product-added">
-          <img class="col-3 img-fluid img-thumbnail" src="img/product.jpg" alt="">
-          <div class="col-7 product-added-info">
-            <h4>Nombre del producto</h4>
-            <div class="quantity-container"><span class="quantity-label">Cantidad: </span><span class="quantity">5</span></div>
-            <span class="price">$$$$$$</span>
-          </div>
-          <div class="remove-btn col-2">
-            <button class="btn btn-danger">Quitar</button>
-          </div>
-        </article>
-
-        <article class="row product-added">
-          <img class="col-3 img-fluid img-thumbnail" src="img/product.jpg" alt="">
-          <div class="col-5 col-md-7 product-added-info">
-            <h4>Nombre del producto</h4>
-            <div class="quantity-container"><span class="quantity-label">Cantidad: </span><span class="quantity">5</span></div>
-            <span class="price">$$$$$$</span>
-          </div>
-          <div class="remove-btn col-2">
-            <button type="button" class="btn btn-danger">Quitar</button>
-          </div>
-        </article>
+        <?php foreach ($products as $product) {
+          echo '<article class="row product-added">';
+          echo '<img class="col-3 img-fluid img-thumbnail" src="product_img/' . $product["id"] . '.jpg" alt="">';
+          echo '<div class="col-7 product-added-info">';
+          echo '<h4>' . $product["name"] . '</h4>';
+          echo '<form method="post">';
+          echo '<input style="display: none" name="id" value="' . $product["id"] . '"></input>';
+          echo 'Cantidad: <input type="number" name="quantity" min="1" max="50" value="' . $product["quantity"] . '">   ';
+          echo '<input type="submit" value="modificar">';
+          echo '</form>';
+          echo '<span class="price">$' . $product["price"] . '</span>';
+          echo '</div>';
+          echo '<div class="remove-btn col-2">';
+          echo '<form method="post">';
+          echo '<input style="display: none" name="delete" value="' . $product["id"] . '"></input>';
+          echo '<button type="submit" class="btn btn-danger">Quitar</button><br>';
+          echo '</form>';
+          echo '</div>';
+          echo '</article>';
+        } ?>
 
       </section>
 
       <section class="proceder col-12 col-md-5">
         <form action="">
-          <span class="total-price-label">Total: </span> <span class="total-price">$$$$$$$</span>
+          <span class="total-price-label">Total: </span> <span class="total-price">$<?= $Cart->getTotalPrice() ?> </span>
           <br>
           <button type="button" class="btn btn-success">Proceder a pagar</button>
           <form action=""></form>

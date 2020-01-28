@@ -1,10 +1,22 @@
 <?php
 include 'clases/Connection.php';
 include 'clases/Product.php';
+include 'clases/Cart.php';
+include 'clases/Session.php';
+
 session_start();
 
 $Product = new Product;
 $Product->getProductById();
+
+if($_POST){
+  if(isset($_SESSION["customerId"])){
+    $Cart = new Cart;
+    $error = $Cart->addProduct($Product->getId(), $Product->getStock());
+  }else{
+    header('location: ingreso.php');
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,12 +54,13 @@ $Product->getProductById();
           </div>
 
 
-          <form action="">
+          <form action="" method="post">
             <div>
               <label for="">Cantidad: </label>
-              <input type="number" name="quantity" min="1" max="10" value="1"><br>
+              <input type="number" name="quantity" min="1" max="50" value="1"><br>
             </div>
             <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+            <?php  echo (isset($error)) ? "<div style='display:block' class='invalid-feedback'>" . $error . "</div>" : "" ?>
           </form>
 
         </article>
