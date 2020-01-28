@@ -128,7 +128,6 @@ class Customer
             if(strlen($password) > 0){
                 $hash = password_hash($password, PASSWORD_DEFAULT);
             }else{
-                echo 'hola';
                 $hash = $this->getPassword();
             }
             $stmt = $link->prepare("update customers set 
