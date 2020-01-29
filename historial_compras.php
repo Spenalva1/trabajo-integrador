@@ -1,5 +1,13 @@
 <?php
-  
+
+require 'clases/Session.php';
+require 'clases/Session.php';
+
+if (!Session::checkIfCustomerIsLogged()) {
+  header('location: index.php');
+}
+
+
 
 ?>
 
@@ -27,7 +35,7 @@
         <h2 class="col-12 col-sm-6">Historial de compras</h2>
 
         <div class="col-12 col-sm-3 ml-auto linkToPerfil">
-          <a href="perfil.html">Volver al perfil</a>
+          <a href="perfil.php">Volver al perfil</a>
         </div>
 
       </section>

@@ -12,10 +12,13 @@ $Cart = new Cart;
 $products = $Cart->listProducts();
 
 if ($_POST) {
+
   if (isset($_POST["delete"])) {
     $Cart->deleteProduct();
-  }else{
+  } else if (isset($_POST["quantity"])) {
     $Cart->modifyCuantityOfProduct();
+  } else {
+    $errors = $Cart->checkOut($products);
   }
 }
 
@@ -67,11 +70,22 @@ if ($_POST) {
       </section>
 
       <section class="proceder col-12 col-md-5">
-        <form action="">
+        <form action="" method="POST">
           <span class="total-price-label">Total: </span> <span class="total-price">$<?= $Cart->getTotalPrice() ?> </span>
           <br>
-          <button type="button" class="btn btn-success">Proceder a pagar</button>
-          <form action=""></form>
+          <input style="display: none" name="checkout" value="<?= $Cart->getTotalPrice() ?>"></input>
+          <button type="submit" class="btn btn-success">Proceder a pagar</button>
+          <?php if (isset($errors)) {
+            echo '<br><br><div id="error" class="alert alert-danger">Ya no hay el stock deseado de: ';
+            echo '<ul>';
+            foreach ($errors as $error) {
+              echo '<li>' . $error . '</li>';
+            }
+            echo '</ul>';
+            echo '</div>';
+          } ?>
+
+        </form>
       </section>
     </main>
   </div>

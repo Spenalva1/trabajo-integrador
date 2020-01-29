@@ -10,8 +10,40 @@ class Cart
 {
     public $id;
 
-    public function checkOut()
+    public function checkOut($products) //falta qué hacer cuando no compra nada
     {
+        $link = Connection::connect();
+        foreach($products as $product){
+            $stmt = $link->prepare("select stock from products where id = :id");
+            $stmt->bindParam(':id', $product["id"], PDO::PARAM_STR);
+            $stmt->execute();
+            $stock = $stmt->fetch(PDO::FETCH_ASSOC)["stock"];
+            if($product["quantity"] > $stock){
+                $errors[] = $product["name"];
+            }
+        }
+        if(isset($errors)){
+            return $errors;
+        }
+        // si llega aca es porque hay stock para todo lo que pide el cliente
+        
+        $stmt= $link->prepare("insert into receipts values(default, :date, :customerId)"); //se crea el recibo
+        $stmt->bindParam(':date', date("Y-m-d H:i:s"), PDO::PARAM_STR);
+        $stmt->bindParam(':customerId', $_SESSION["customerId"], PDO::PARAM_STR);
+        $stmt->execute();
+
+
+        //que se guarden en receiptsProducts los productos del recibo
+        
+
+
+        
+        $stmt= $link->prepare("delete from carts where customer_id = :customerId"); //se borran los productos comprados del carrito
+        $stmt->bindParam(':customerId', $_SESSION["customerId"], PDO::PARAM_STR);
+        $stmt->execute();
+        header('location: index.php');
+        
+        return false;
     }
 
 

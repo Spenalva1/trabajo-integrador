@@ -61,3 +61,11 @@ section.proceder form span{
 section.proceder form button{
     margin-top: 20px;
 }
+
+#error{
+    text-align: left;
+}
+
+#error ul{
+    margin: 0;
+}
