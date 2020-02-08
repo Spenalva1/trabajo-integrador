@@ -98,7 +98,7 @@ class ProductsController extends Controller
     public function show($id)
     {
         $Product = Product::find($id);
-         // return view('', compact('Product'));
+        return view('product-detail', compact('Product'));
     }
 
     /**
@@ -198,4 +198,11 @@ class ProductsController extends Controller
         $Product->delete();
         return redirect('/adminProducts');
     }
+
+    public function list() // listar productos para el cliente
+    {
+        $Products = Product::all();
+        return view('products', compact('Products'));
+    }
+
 }

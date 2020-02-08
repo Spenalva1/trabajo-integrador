@@ -30,7 +30,7 @@
                 <td>{{ $Customer->first_name }}</td>
                 <td>{{ $Customer->last_name }}</td>
                 <td>{{ $Customer->email }}</td>
-                <td><img class="img-fluid img-thumbnail main-image" src="Customer_img/{{$Customer->image}}" alt=""></td>
+                <td><img class="img-fluid img-thumbnail main-image" src="user_img/{{$Customer->image}}" alt=""></td>
                 <td>{{ $Customer->birthdate }}</td>
                 <td>{{ $Customer->phone }}</td>
                 <td>{{ $Customer->address }}</td>

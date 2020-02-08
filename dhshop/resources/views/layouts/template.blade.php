@@ -19,14 +19,18 @@
                 <a href='/'><img src='/img/logo-dh.PNG' alt=''></a>
             </article>
             <article class='usuario-acciones'>
-                <?php if (isset($_SESSION['customerId'])) :?>
-                <a href='logOut.php' id='registrarme'><button type="button" class="btn btn-danger">Log Out</button></a>
-                <?php else: ?>
-                {{--  VER ESTO --}}
-                <a href='registro.php' id='registrarme'>Crear cuenta</a> 
-                <a href='ingreso.php' id='ingresar'>Ingresar</a>
-                {{-- ---------- --}}
-                <?php endif;?>
+                @if(Auth::user() == null)
+                    <a href='/register' id='registrarme'>Crear cuenta</a> 
+                    <a href='/login' id='ingresar'>Ingresar</a>
+                @else
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Cerrar sesión
+                    </a>
+            
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @endif
             </article>
             </section>
             <hr>
@@ -39,27 +43,27 @@
             <div class='collapse navbar-collapse' id='navbarSupportedContent'>
                 <ul class='navbar-nav mr-auto'>
                 <li class='nav-item active'>
-                    <a class='nav-link' href='index'>Home <span class='sr-only'>(current)</span></a>
+                    <a class='nav-link' href='/'>Home <span class='sr-only'>(current)</span></a>
                 </li>
                 <li class='nav-item'>
-                    <a class='nav-link' href='products'>Productos</a>
+                    <a class='nav-link' href='/products'>Productos</a>
                 </li>
                 <li class='nav-item '>
-                    <a class='nav-link' href='contact'>Contacto</a>
+                    <a class='nav-link' href='/contact'>Contacto</a>
                 </li>
                 <li class='nav-item'>
-                    <a class='nav-link' href='faq'>Ayuda</a>
+                    <a class='nav-link' href='/faq'>Ayuda</a>
                 </li>
+
+                @if(Auth::user() != null)
                 <li class='nav-item'>
-                {{--  VER ESTO --}}
-                <?php if (isset($_SESSION['customerId'])) :?>
                     <a class='nav-link' href='profile'>Perfil</a>
                 </li>
                 <li class='nav-item'>
                     <a class='nav-link' href='cart'>Carrito</a>
                 </li>
-                <?php endif;?>
-                {{--  ----- --}}
+                @endif
+
                 </ul>
                 <form class='form-inline my-2 my-lg-0'>
                 <input class='form-control mr-sm-2' type='search' placeholder='Search' aria-label='Search'>

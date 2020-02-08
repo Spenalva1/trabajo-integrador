@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -49,9 +49,22 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'image' => 'mimes:jpg,jpeg,png,svg,gif', 
+            'dni' => ['required', 'numeric', 'unique:users'],
+            'birthdate' => ['required', 'before:18 years ago'],
+            'phone' => ['required', 'numeric'],
+            'address' => ['required', 'string']
+        ], [
+            'required' => 'Completar campo',
+            'email' => 'Formato de email incorrecto',
+            'email.unique' => 'Ya existe un usuario con el email ingresado',
+            'dni.unique' => 'Ya existe un usuario con el dni ingresado',
+            'mimes' => 'Tiene que ser un archivo con una de las siguientes extensiones: .jpg, .png, .gif, .svg',
+            'before' => 'Tienes que ser mayor a 18 años'
         ]);
     }
 
@@ -63,10 +76,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $imageName = 'perfil';
+        if(isset($data['image'])){
+            $imageName = time() . '.' . $data['image']->getClientOriginalExtension();
+            $data['image']->move(public_path('user_img/'), $imageName);
+        }
+
         return User::create([
-            'name' => $data['name'],
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'birthdate' => $data['birthdate'],
+            'phone' => $data['phone'],
+            'dni' => $data['dni'],
+            'address' => $data['address'],
+            'image' => $imageName
         ]);
     }
 }

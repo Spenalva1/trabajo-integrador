@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    public $table = 'customers';
+    public $table = 'users';
     public $timestamps = false;
     public $guarded = [];
 }

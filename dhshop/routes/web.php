@@ -19,6 +19,18 @@ Route::get('/admin', function () {
     return view('admin');
 });
 
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+Route::get('/faq', function () {
+    return view('faq');
+});
+
+Route::get('/registerr', function () {
+    return view('/auth/registerr');
+});
+
 
 ########### Marks #############
 Route::get('/adminMarks', 'MarksController@index');
@@ -38,7 +50,9 @@ Route::post('/editCategory/{id}', 'CategoriesController@update');
 Route::get('/deleteCategory/{id}', 'CategoriesController@delete');
 Route::post('/deleteCategory/{id}', 'CategoriesController@destroy');
 
-########### Prodcuts #############
+########### Products #############
+Route::get('/products', 'ProductsController@list');
+Route::get('/products/{id}', 'ProductsController@show');
 Route::get('/adminProducts', 'ProductsController@index');
 Route::get('/addProduct', 'ProductsController@create');
 Route::post('/addProduct', 'ProductsController@store');
@@ -48,8 +62,14 @@ Route::get('/deleteProduct/{id}', 'ProductsController@delete');
 Route::post('/deleteProduct/{id}', 'ProductsController@destroy');
 
 ########### Customers #############
+Route::get('/profile', 'CustomersController@show');
+Route::post('/profile', 'CustomersController@update');
 Route::get('/adminCustomers', 'CustomersController@index');
 Route::get('/deleteCustomer/{id}', 'CustomersController@delete');
 Route::post('/deleteCustomer/{id}', 'CustomersController@destroy');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
