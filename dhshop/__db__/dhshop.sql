@@ -49,7 +49,7 @@ INSERT INTO `admins` (`id`, `user`, `password`) VALUES
 
 CREATE TABLE `carts` (
   `id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -81,10 +81,10 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Table structure for table `users`
 --
 
-CREATE TABLE `customers` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
@@ -98,10 +98,10 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `customers`
+-- Dumping data for table `users`
 --
 
-INSERT INTO `customers` (`id`, `first_name`, `last_name`, `email`, `password`, `birthdate`, `phone`, `dni`, `address`, `image`) VALUES
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `birthdate`, `phone`, `dni`, `address`, `image`) VALUES
 (4, 'Santiago Nicolás', 'Penalva', 'penalvasantiagogm@gmail.com', '$2y$10$NEQ33MDfGz9XISUxKruSkuBIvNJQreSURbdGC7WpJnJ6L9V2UTPv6', '1999-08-05', '01166400929', '42148622', 'Virrey Cevallos 215', '4.jpg'),
 (5, 'Catalina', 'Fernandez Jorba', 'catafernandezj@gmail.com', '$2y$10$nENNm1On/d6EcTvBa9lhEeJBiUsMEhV..VQIlFAngtr6PE6Y32pQi', '2000-05-03', '434343434343', '12341234', 'sarmiento 2143', '5.jpg');
 
@@ -182,7 +182,7 @@ INSERT INTO `products` (`id`, `name`, `price`, `stock`, `description`, `image`, 
 CREATE TABLE `receipts` (
   `id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `customer_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -212,7 +212,7 @@ ALTER TABLE `admins`
 --
 ALTER TABLE `carts`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `user_id` (`user_id`),
   ADD KEY `product_id` (`product_id`);
 
 --
@@ -222,9 +222,9 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `customers`
+-- Indexes for table `users`
 --
-ALTER TABLE `customers`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`),
   ADD UNIQUE KEY `dni` (`dni`);
@@ -256,7 +256,7 @@ ALTER TABLE `products`
 --
 ALTER TABLE `receipts`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `receiptsproducts`
@@ -289,9 +289,9 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT for table `users`
 --
-ALTER TABLE `customers`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
@@ -332,7 +332,7 @@ ALTER TABLE `receiptsproducts`
 -- Constraints for table `carts`
 --
 ALTER TABLE `carts`
-  ADD CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
@@ -346,7 +346,7 @@ ALTER TABLE `products`
 -- Constraints for table `receipts`
 --
 ALTER TABLE `receipts`
-  ADD CONSTRAINT `receipts_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+  ADD CONSTRAINT `receipts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `receiptsproducts`
