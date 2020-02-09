@@ -27,10 +27,6 @@ Route::get('/faq', function () {
     return view('faq');
 });
 
-Route::get('/registerr', function () {
-    return view('/auth/registerr');
-});
-
 
 ########### Marks #############
 Route::get('/adminMarks', 'MarksController@index');
