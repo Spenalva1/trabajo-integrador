@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2020 at 09:23 AM
+-- Generation Time: Feb 09, 2020 at 04:08 AM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.3.11
 
@@ -81,33 +81,6 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(200) NOT NULL,
-  `birthdate` date NOT NULL,
-  `phone` varchar(20) NOT NULL,
-  `dni` varchar(15) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `image` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `birthdate`, `phone`, `dni`, `address`, `image`) VALUES
-(4, 'Santiago Nicolás', 'Penalva', 'penalvasantiagogm@gmail.com', '$2y$10$NEQ33MDfGz9XISUxKruSkuBIvNJQreSURbdGC7WpJnJ6L9V2UTPv6', '1999-08-05', '01166400929', '42148622', 'Virrey Cevallos 215', '4.jpg'),
-(5, 'Catalina', 'Fernandez Jorba', 'catafernandezj@gmail.com', '$2y$10$nENNm1On/d6EcTvBa9lhEeJBiUsMEhV..VQIlFAngtr6PE6Y32pQi', '2000-05-03', '434343434343', '12341234', 'sarmiento 2143', '5.jpg');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `marks`
 --
 
@@ -130,7 +103,7 @@ INSERT INTO `marks` (`id`, `name`) VALUES
 (7, 'Fiio'),
 (10, 'Lenovo'),
 (16, 'Kz'),
-(18, 'Corsair');
+(23, 'Corsair');
 
 -- --------------------------------------------------------
 
@@ -197,6 +170,33 @@ CREATE TABLE `receiptsproducts` (
   `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `birthdate` date NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `dni` varchar(15) NOT NULL,
+  `address` varchar(50) NOT NULL,
+  `image` varchar(100) NOT NULL,
+  `remember_token` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `birthdate`, `phone`, `dni`, `address`, `image`, `remember_token`) VALUES
+(7, 'Santiago Nicolás', 'Penalva', 'penalvasantiagogm@gmail.com', '$2y$10$1yOIe5CWuhJq8xzinxK94.ylIUfVr0hmyuQEAel4QzIrj6t.n553u', '1999-05-05', '01166400929', '42148622', 'Virrey Cevallos 215, 4to C', '1581203826.jpg', NULL);
+
 --
 -- Indexes for dumped tables
 --
@@ -220,14 +220,6 @@ ALTER TABLE `carts`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `dni` (`dni`);
 
 --
 -- Indexes for table `marks`
@@ -267,6 +259,14 @@ ALTER TABLE `receiptsproducts`
   ADD KEY `product_id` (`product_id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `dni` (`dni`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -289,16 +289,10 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `marks`
 --
 ALTER TABLE `marks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `newsletter`
@@ -323,6 +317,12 @@ ALTER TABLE `receipts`
 --
 ALTER TABLE `receiptsproducts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
