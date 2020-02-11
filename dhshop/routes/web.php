@@ -64,6 +64,9 @@ Route::get('/adminCustomers', 'CustomersController@index');
 Route::get('/deleteCustomer/{id}', 'CustomersController@delete');
 Route::post('/deleteCustomer/{id}', 'CustomersController@destroy');
 
+########### Carts #############
+Route::post('/products/{id}', 'CartsController@addProduct');   // agregar producto al carrito
+
 
 
 Auth::routes();

@@ -26,6 +26,9 @@
 
 
     <form action="" method="post">
+      @csrf
+
+      <input type="hidden" value="{{$Product->id}}" name="product_id">
 
       <div>
         <label for="">Cantidad: </label>
