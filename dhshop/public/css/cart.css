@@ -60,6 +60,7 @@ section.proceder form span{
 
 section.proceder form button{
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 #error{

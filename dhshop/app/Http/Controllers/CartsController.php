@@ -48,7 +48,7 @@ class CartsController extends Controller
     }
 
     public function modifyProductQuantity(Request $request){
-        $this->validate($request, ['quantity' => 'numeric|max:'.Product::find($request['product_id'])->stock], ['max' => 'No hay stock suficiente de ' . Product::find($request['product_id'])->name]);
+        $this->validate($request, ['quantity' => 'numeric|max:'.Product::find($request['product_id'])->stock], ['max' => Product::find($request['product_id'])->name]);
 
         $Cart = Cart::where([['user_id','=', Auth::user()->id], ['product_id', '=', $request['product_id']]])->get()->pop();
 
@@ -71,5 +71,17 @@ class CartsController extends Controller
 
     public function checkout(Request $request){
         $Products = Auth::user()->cart;
+        
+        foreach ($Products as $Product) {
+            if($Product->pivot->quantity > $Product->stock){  // Me fijo que todavia haya el stock deseado por el usuario ya que 
+                $stockErrors[] = $Product->name;              // puede cambiar mientras tiene el producto en el carrito
+            }
+        }
+        
+        if (isset($stockErrors)){
+            return redirect('/cart')->withErrors($stockErrors); //Avisa que ya no hay stock suficiente
+        }
+
+        
     }
 }

@@ -48,8 +48,8 @@
             <button type="submit" class="btn btn-success">Proceder a pagar</button>
 
             @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
+            <div class="alert alert-danger text-left"> No hay stock suficiente de:
+                <ul class="text-left">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
