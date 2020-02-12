@@ -60,6 +60,8 @@ class RegisterController extends Controller
             'address' => ['required', 'string']
         ], [
             'required' => 'Completar campo',
+            'password.confirmed' => 'Las contraseñas no coinciden',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres',
             'email' => 'Formato de email incorrecto',
             'email.unique' => 'Ya existe un usuario con el email ingresado',
             'dni.unique' => 'Ya existe un usuario con el dni ingresado',
