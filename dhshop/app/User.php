@@ -38,4 +38,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    
+
+    public function cart(){
+        return $this->belongsToMany('App\Product', 'carts', 'user_id', 'product_id')->withPivot('quantity');
+    }
 }

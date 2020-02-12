@@ -66,6 +66,10 @@ Route::post('/deleteCustomer/{id}', 'CustomersController@destroy');
 
 ########### Carts #############
 Route::post('/products/{id}', 'CartsController@addProduct');   // agregar producto al carrito
+Route::get('/cart', 'CartsController@show');   // mostrar carrito del cliente logeado
+Route::post('/modifyProductQuantity', 'CartsController@modifyProductQuantity');   // modificar la cantidad del producto en el carrito
+Route::post('/removeProduct', 'CartsController@removeProduct');   // quitar producto del carrito
+Route::post('/checkout', 'CartsController@checkout');   // quitar producto del carrito
 
 
 

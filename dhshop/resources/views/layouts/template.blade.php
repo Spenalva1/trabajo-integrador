@@ -57,10 +57,10 @@
 
                 @if(Auth::user() != null)
                 <li class='nav-item'>
-                    <a class='nav-link' href='profile'>Perfil</a>
+                    <a class='nav-link' href='/profile'>Perfil</a>
                 </li>
                 <li class='nav-item'>
-                    <a class='nav-link' href='cart'>Carrito</a>
+                    <a class='nav-link' href='/cart'>Carrito</a>
                 </li>
                 @endif
 

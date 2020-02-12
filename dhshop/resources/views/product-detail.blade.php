@@ -16,34 +16,38 @@
     <h2>{{$Product->name}}</h2>
     <h3>${{$Product->price}}</h3>
 
-    <div class="stock-div">
-      @if($Product->stock > 0)
-        <span class="stock">En stock </span>
-      @else
+    @if($Product->stock < 1)
+      <div class="stock-div">
         <span class="ofstock">Sin stock</span>
-      @endif
-    </div>
-
-
-    <form action="" method="post">
-      @csrf
-
-      <input type="hidden" value="{{$Product->id}}" name="product_id">
-
-      <div>
-        <label for="">Cantidad: </label>
-        <input type="number" name="quantity" min="1" max="50" value="1"><br>
       </div>
+      @else
 
-      <button type="submit" class="btn btn-primary">Agregar al carrito</button>
-
-      @if ($errors->any())
-        <div class="alert alert-danger">
-          <li>{{ $error }}</li>
+      <div class="stock-div">
+        <span class="stock">En stock </span>
+      </div>    
+      <form action="" method="post">
+        @csrf
+        
+        <input type="hidden" value="{{$Product->id}}" name="product_id">
+        
+        <div>
+          <label for="">Cantidad: </label>
+          <input type="number" name="quantity" min="1" max="50" value="{{old('quantity', '1')}}"><br>
         </div>
-      @endif
-
-    </form>
+        
+        @if ($errors->any())
+        <div class="alert alert-danger"> 
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+        @endif
+        
+        <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+      </form>
+    @endif
 
   </article>
 </section>
