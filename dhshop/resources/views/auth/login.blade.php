@@ -51,7 +51,7 @@
                     </form>
                     <a href="/register" style="width:51%" class="btn btn-danger">Crear cuenta</a>
 
-                    <p>¿Olvidaste la contraseña? <a href="forgottenPass.php">Haz click aquí</a></p>
+                    <p>¿Olvidaste la contraseña? <a href="/password/reset">Haz click aquí</a></p>
                 </div>
             </div>
         </section>
