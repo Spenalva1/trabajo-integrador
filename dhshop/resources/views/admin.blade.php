@@ -22,5 +22,5 @@
 
     <br>
 
-    <a class="py-2" href="logOut.php">Log Out</a>
+    <a class="py-2" href="adminLogOut">Log Out</a>
 @endsection
